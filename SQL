@@ -1,1 +1,89 @@
+create database Demo_QLD
+go
+use Demo_QLD
+go
+create table SinhVien
+(
+MaSinhVien varchar(50) primary key not null, 
+TenLop nvarchar(150) foreign key references Lop ,
+Hoten nvarchar(150)not null,
+QueQuan nvarchar(350)not null,
+NgaySinh date not null,
+NoiSinh nvarchar(400)not null,
+GioiTinh nvarchar(5)not null,
+GhiChu nvarchar(500) ,
+MaNganh varchar(50) foreign key references Nganh,
+MaKhoaHoc varchar(100) foreign key references KhoaHoc 
+)
+go
+create table Diem
+(
+ChuyenCan float not null,
+KiemTraGK float not null,
+ThucHanh float, 
+ThiKetThuc float not null,
+ThoaLuan float, 
+TongKetHP float not null,
+DiemChu varchar(30) not null,
+MaHP varchar(50) foreign key references HocPhan ,
+MaSinhVien varchar(50) foreign key references SinhVien,
+MaKhoaHoc varchar(100) foreign key references KhoaHoc 
+)
+go
+create table HocPhan
+(
+MaHP varchar(50) primary key not null,
+MaNganh varchar(50) foreign key references Nganh ,
+TenHP nvarchar(150) not null,
+SoTC int not null,
+MaKhoaHoc varchar(100) foreign key references KhoaHoc 
+)
+go
+create table GiangVien
+(
+MaGV varchar(50) primary key not null, 
+TenGV nvarchar(150) not null,
+SoDT varchar(20) not null,
+TrinhDo nvarchar(50) not null,
+MaKhoa varchar(50) foreign key references Khoa 
+)
+go
+create table Khoa
+(
+MaKhoa varchar(50) primary key not null,
+TenKhoa nvarchar(150) not null,
+)
+create table Lop
+(
+TenLop nvarchar(150) primary key not null,
+MaNganh varchar(50) foreign key references  Nganh 
+)
+create table Nganh
+(
+MaNganh varchar(50) primary key not null,
+TenNganh nvarchar(150) not null,
+MaKhoa varchar(50) foreign key references Khoa 
+)
+create table KhoaHoc
+(
+MaKhoaHoc varchar(100) primary key not null,
+TenKhoahoc varchar(100)  not null,
+KyHoc varchar(100) not null,
+)
+create table TaiKhoan
+(
+UserName varchar(50) primary key not null,
+pass nvarchar(50) not null,
+Quyen int not null,
+)
+
+select a.TenKhoa as N'TÊN KHOA',b.TenNganh AS N'TÊN NGÀNH',c.MaHP,c.TenHP,c.SoTC from HocPhan c,Khoa a,Nganh b where a.MaKhoa=b.MaKhoa and b.MaNganh=c.MaNganh
+select * from Nganh,Khoa where Nganh.MaKhoa=Khoa.MaKhoa and Khoa.TenKhoa=N''
+select * from SinhVien
+select * from SinhVien a,Nganh b,Lop c,KhoaHoc d where a.MaKhoaHoc=d.MaKhoaHoc and    a.TenLop=c.TenLop and a.MaNganh=b.MaNganh   and a.MaSinhVien='72DCHT20071';
+select * from TaiKhoan
+update SinhVien set Hoten='2' , NgaySinh='2000-01-19',GioiTinh='NU' where MaSinhVien='72DCHT20071'
+update TaiKhoan set pass='' where UserName=''
+update SinhVien set QueQuan=N'hn',NgaySinh='2003-01-19',NoiSinh=N'hn',GioiTinh='NU',GhiChu=N'khong' where MaSinhVien='72DCHT20070'
+select * from TaiKhoan 
 
